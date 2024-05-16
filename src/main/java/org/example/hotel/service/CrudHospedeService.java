@@ -3,6 +3,7 @@ package org.example.hotel.service;
 import org.example.hotel.orm.Hospede;
 import org.example.hotel.repository.HospedeRepository;
 import org.springframework.stereotype.Service;
+
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -33,13 +34,38 @@ public class CrudHospedeService {
                     cadastrarHospede();
                     break;
                 case 2:
-                    listarHospede();
+                    System.out.println("Digite a senha do gerente: ");
+                    Scanner scanner = new Scanner(System.in);
+                    String password = scanner.next();
+
+                    if (password.equals("admin")) {
+                        listarHospede();
+                    } else {
+                        System.out.println("Senha incorreta!");
+                    }
+
                     break;
                 case 3:
-                    deletarHospede();
+                    System.out.println("Digite a senha do gerente: ");
+                    scanner = new Scanner(System.in);
+                    password = scanner.next();
+                    if (password.equals("admin")) {
+                        deletarHospede();
+                    } else {
+                        System.out.println("Senha incorreta!");
+                    }
+
                     break;
                 case 4:
-                    atualizarHospede();
+                    System.out.println("Digite a senha do gerente: ");
+                    scanner = new Scanner(System.in);
+                    password = scanner.next();
+                    if (password.equals("admin")) {
+                        atualizarHospede();
+                    } else {
+                        System.out.println("Senha incorreta!");
+                    }
+
                     break;
                 default:
                     isTrue = false;
@@ -52,6 +78,7 @@ public class CrudHospedeService {
 
 
     public void cadastrarHospede() {
+
         Scanner sc = new Scanner(System.in);
         System.out.println("Digite o nome do hospede: ");
         String nome = sc.nextLine();
