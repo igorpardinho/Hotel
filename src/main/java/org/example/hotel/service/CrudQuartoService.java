@@ -3,7 +3,6 @@ package org.example.hotel.service;
 
 import jakarta.transaction.Transactional;
 import org.example.hotel.orm.Quarto;
-import org.example.hotel.orm.TipoQuarto;
 import org.example.hotel.repository.QuartoRepository;
 import org.example.hotel.repository.TipoQuartoRepository;
 import org.springframework.stereotype.Service;
@@ -63,7 +62,7 @@ public class CrudQuartoService {
     public void cadastrarQuarto() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Digite o numero do quarto: ");
-        Integer numero = sc.nextInt();
+        int numero = sc.nextInt();
         System.out.println("Digite o nome do quarto: ");
         String nome = sc.next();
 
@@ -114,7 +113,7 @@ public class CrudQuartoService {
             String nome = sc.nextLine();
             quarto.setNome(nome);
             System.out.println("Digite o novo numero do Quarto:");
-            Integer numero = sc.nextInt();
+            int numero = sc.nextInt();
             quarto.setNumero(numero);
             quartoRepository.save(quarto);
             System.out.println("Quarto atualizado com sucesso");

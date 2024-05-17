@@ -4,7 +4,7 @@ import org.example.hotel.orm.Funcionario;
 import org.example.hotel.repository.FuncionarioRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -59,9 +59,7 @@ public class CrudFuncionarioService {
         System.out.println("Digite o cpf do funcionario: ");
         String cpf = sc.nextLine();
 
-        Funcionario funcionario = new Funcionario();
-        funcionario.setNome(nome);
-        funcionario.setCpf(cpf);
+        Funcionario funcionario = new Funcionario(nome,cpf);
         funcionarioRepository.save(funcionario);
         System.out.println("Funcionario cadastrado com sucesso!");
     }

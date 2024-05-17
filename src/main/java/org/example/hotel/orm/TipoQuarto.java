@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 
-import java.util.List;
 
 @Entity
 @Table(name = "tipos_de_quartos")
