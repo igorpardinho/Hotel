@@ -61,7 +61,6 @@ public class CrudTipoQuartoService {
         Scanner sc = new Scanner(System.in);
         System.out.println("Digite o nome do tipo de quarto: ");
         String nome = sc.nextLine();
-        Optional<Quarto> optionalQuarto = q
         TipoQuarto tipoQuarto = new TipoQuarto(nome);
         tipoQuartoRepository.save(tipoQuarto);
         System.out.println("Tipo de quarto cadastrado com sucesso!");
