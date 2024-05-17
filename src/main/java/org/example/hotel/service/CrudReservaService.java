@@ -1,6 +1,7 @@
 package org.example.hotel.service;
 
-import org.example.hotel.orm.Funcionario;
+
+import jakarta.transaction.Transactional;
 import org.example.hotel.orm.Hospede;
 import org.example.hotel.orm.Reserva;
 import org.example.hotel.repository.HospedeRepository;
@@ -11,6 +12,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 @Service
+@Transactional
 public class CrudReservaService {
 
     private ReservaRepository reservaRepository;
@@ -59,22 +61,12 @@ public class CrudReservaService {
     public void cadastrarReserva() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Digite o numero da reserva: ");
-        Integer numero = sc.nextInt();
-        System.out.println("Digite o id do hospede que vai fazer a reserva:");
-        Long idHospede = sc.nextLong();
-        Optional<Hospede> optionalHospede = hospedeRepository.findById(idHospede);
-        if (optionalHospede.isPresent()) {
-            Reserva reserva = new Reserva();
-            reserva.setNumero(numero);
-            Hospede hospede = optionalHospede.get();
-            reserva.setHospede(hospede);
-            reservaRepository.save(reserva);
-            hospedeRepository.save(hospede);
-            System.out.println("Reserva cadastrada com sucesso!");
-        } else {
-            System.out.println("Nenhum hospede encontrado");
-        }
+        int numero = sc.nextInt();
+        Reserva reserva = new Reserva(numero);
 
+
+        reservaRepository.save(reserva);
+        System.out.println("Reserva cadastrada com sucesso!");
 
     }
 
@@ -94,8 +86,11 @@ public class CrudReservaService {
         Long id = sc.nextLong();
         Optional<Reserva> optionalReserva = reservaRepository.findById(id);
 
+
         if (optionalReserva.isPresent()) {
+
             Reserva reserva = optionalReserva.get();
+
             reservaRepository.delete(reserva);
             System.out.println("Reserva deletada com sucesso");
         } else {

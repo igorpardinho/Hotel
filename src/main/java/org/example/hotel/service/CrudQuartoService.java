@@ -67,23 +67,9 @@ public class CrudQuartoService {
         System.out.println("Digite o nome do quarto: ");
         String nome = sc.next();
 
-        Quarto quarto = new Quarto();
-
-
-        System.out.println("Digite o id do tipo de quarto para vincular:");
-        Long id = sc.nextLong();
-        Optional<TipoQuarto> optionalTipoQuarto = tipoQuartoRepository.findById(id);
-        if (optionalTipoQuarto.isPresent()) {
-            TipoQuarto tipoQuarto = optionalTipoQuarto.get();
-            quarto.setNumero(numero);
-            quarto.setNome(nome);
-            quarto.setTipoQuarto(tipoQuarto);
-            quartoRepository.save(quarto);
-            System.out.println("Quarto Cadastrado com sucesso!");
-        } else {
-            System.out.println("Tipo de quarto não encontrado");
-        }
-
+        Quarto quarto =  new Quarto(nome,numero);
+        quartoRepository.save(quarto);
+        System.out.println("Quarto Cadastrado com sucesso!");
 
     }
 
@@ -104,7 +90,9 @@ public class CrudQuartoService {
         Optional<Quarto> optionalQuarto = quartoRepository.findById(id);
 
         if (optionalQuarto.isPresent()) {
+
             Quarto quarto = optionalQuarto.get();
+
             quartoRepository.delete(quarto);
             System.out.println("Quarto deletado com sucesso");
         } else {

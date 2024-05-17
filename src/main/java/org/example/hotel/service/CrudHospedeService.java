@@ -1,20 +1,25 @@
 package org.example.hotel.service;
 
+import jakarta.transaction.Transactional;
 import org.example.hotel.orm.Hospede;
 import org.example.hotel.repository.HospedeRepository;
+import org.example.hotel.repository.ReservaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.Scanner;
 
 @Service
+@Transactional
 public class CrudHospedeService {
 
 
     private HospedeRepository hospedeRepository;
+    private ReservaRepository reservaRepository;
 
-    public CrudHospedeService(HospedeRepository hospedeRepository) {
+    public CrudHospedeService(HospedeRepository hospedeRepository, ReservaRepository reservaRepository) {
         this.hospedeRepository = hospedeRepository;
+        this.reservaRepository = reservaRepository;
     }
 
     public void menu() {
@@ -87,13 +92,10 @@ public class CrudHospedeService {
         System.out.println("Digite o telefone do hospede: ");
         String telefone = sc.nextLine();
 
-
-        Hospede hospede = new Hospede();
-        hospede.setNome(nome);
-        hospede.setCpf(cpf);
-        hospede.setTelefone(telefone);
-
+        Hospede hospede = new Hospede(nome, cpf, telefone);
         hospedeRepository.save(hospede);
+
+
         System.out.println("Hospede cadastrado com sucesso!");
     }
 

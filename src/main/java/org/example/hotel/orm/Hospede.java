@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 
 @Entity
 @Table(name = "hospedes")
@@ -18,12 +20,12 @@ public class Hospede {
 
     }
 
-    public Hospede(String telefone, String cpf, String nome) {
+    public Hospede(String nome, String cpf, String telefone) {
         this.telefone = telefone;
         this.cpf = cpf;
         this.nome = nome;
-    }
 
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

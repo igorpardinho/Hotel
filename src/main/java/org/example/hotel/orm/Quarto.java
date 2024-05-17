@@ -17,6 +17,11 @@ public class Quarto {
 
     }
 
+    public Quarto(String nome, int numero) {
+        this.nome = nome;
+        this.numero = numero;
+    }
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,9 +39,5 @@ public class Quarto {
     @Column(unique = true, nullable = false)
     private String nome;
 
-    @ManyToOne()
-    @JoinColumn(name = "tipo_quarto_id")
-    @Getter
-    @Setter
-    private TipoQuarto tipoQuarto;
+
 }

@@ -16,16 +16,16 @@ public class Reserva {
     public Reserva() {
 
     }
+    public Reserva(int numero){
+        this.numero = numero;
+    }
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.MERGE)
-    @Setter
-    @Getter
-    private Hospede hospede;
+
 
     @Getter
     @Setter

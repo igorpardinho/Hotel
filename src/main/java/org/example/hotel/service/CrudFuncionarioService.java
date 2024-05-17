@@ -63,6 +63,7 @@ public class CrudFuncionarioService {
         funcionario.setNome(nome);
         funcionario.setCpf(cpf);
         funcionarioRepository.save(funcionario);
+        System.out.println("Funcionario cadastrado com sucesso!");
     }
 
 
