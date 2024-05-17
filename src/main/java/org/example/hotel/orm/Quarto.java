@@ -17,7 +17,7 @@ public class Quarto {
 
     }
 
-    public Quarto(String nome, int numero) {
+    public Quarto(int numero,String nome,TipoQuarto quarto) {
         this.nome = nome;
         this.numero = numero;
     }
@@ -38,6 +38,13 @@ public class Quarto {
     @Setter
     @Column(unique = true, nullable = false)
     private String nome;
+
+    @Getter
+    @Setter
+    @ManyToOne
+    private TipoQuarto tipoQuarto;
+
+
 
 
 }

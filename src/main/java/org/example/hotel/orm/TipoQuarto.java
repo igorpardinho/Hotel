@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
 
 
 @Entity
@@ -18,6 +19,7 @@ public class TipoQuarto {
     }
     public TipoQuarto(String nome) {
         this.nome = nome;
+
     }
 
     @Id
@@ -28,6 +30,9 @@ public class TipoQuarto {
     @Setter
     private String nome;
 
+    @OneToMany
+    @JoinColumn(name = "tipoQuarto_id",referencedColumnName = "id")
+    private List<Quarto> quartos;
 
 
     @Override

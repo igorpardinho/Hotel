@@ -3,6 +3,7 @@ package org.example.hotel.service;
 
 import jakarta.transaction.Transactional;
 import org.example.hotel.orm.Quarto;
+import org.example.hotel.orm.TipoQuarto;
 import org.example.hotel.repository.QuartoRepository;
 import org.example.hotel.repository.TipoQuartoRepository;
 import org.springframework.stereotype.Service;
@@ -65,10 +66,19 @@ public class CrudQuartoService {
         int numero = sc.nextInt();
         System.out.println("Digite o nome do quarto: ");
         String nome = sc.next();
+        System.out.println("Digite o id do tipo de quarto para vincular: ");
+        Long id = sc.nextLong();
+        Optional<TipoQuarto> optionalTipoQuartoRepository = tipoQuartoRepository.findById(id);
+        if (optionalTipoQuartoRepository.isPresent()) {
+            TipoQuarto tipoQuarto = optionalTipoQuartoRepository.get();
+            Quarto quarto = new Quarto(numero, nome, tipoQuarto);
+            quartoRepository.save(quarto);
+            System.out.println("Quarto cadastrado com sucesso!");
 
-        Quarto quarto =  new Quarto(nome,numero);
-        quartoRepository.save(quarto);
-        System.out.println("Quarto Cadastrado com sucesso!");
+        } else {
+            System.out.println("Tipo de quarto não encontrado!");
+        }
+
 
     }
 

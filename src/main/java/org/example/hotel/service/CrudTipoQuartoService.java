@@ -2,9 +2,11 @@ package org.example.hotel.service;
 
 
 import jakarta.transaction.Transactional;
+import org.example.hotel.orm.Quarto;
 import org.example.hotel.orm.TipoQuarto;
 import org.example.hotel.repository.QuartoRepository;
 import org.example.hotel.repository.TipoQuartoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
@@ -15,13 +17,9 @@ import java.util.Scanner;
 @Transactional
 public class CrudTipoQuartoService {
 
+    @Autowired
     private TipoQuartoRepository tipoQuartoRepository;
-    private QuartoRepository quartoRepository;
 
-    public CrudTipoQuartoService(TipoQuartoRepository tipoQuartoRepository, QuartoRepository quartoRepository) {
-        this.tipoQuartoRepository = tipoQuartoRepository;
-        this.quartoRepository = quartoRepository;
-    }
 
 
     public void menu() {
@@ -63,6 +61,7 @@ public class CrudTipoQuartoService {
         Scanner sc = new Scanner(System.in);
         System.out.println("Digite o nome do tipo de quarto: ");
         String nome = sc.nextLine();
+        Optional<Quarto> optionalQuarto = q
         TipoQuarto tipoQuarto = new TipoQuarto(nome);
         tipoQuartoRepository.save(tipoQuarto);
         System.out.println("Tipo de quarto cadastrado com sucesso!");
