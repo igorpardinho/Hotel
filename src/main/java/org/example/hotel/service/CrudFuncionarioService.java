@@ -100,10 +100,10 @@ public class CrudFuncionarioService {
         if (optionalFuncionario.isPresent()) {
             sc = new Scanner(System.in);
             Funcionario funcionario = optionalFuncionario.get();
-            System.out.println("Digite o nome do funcionario");
+            System.out.println("Digite o novo nome do funcionario");
             String nome = sc.nextLine();
             funcionario.setNome(nome);
-            System.out.println("Digite o cpf do funcionario");
+            System.out.println("Digite o novo cpf do funcionario");
             String cpf = sc.nextLine();
             funcionario.setCpf(cpf);
             funcionarioRepository.save(funcionario);

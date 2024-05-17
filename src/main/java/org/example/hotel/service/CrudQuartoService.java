@@ -1,7 +1,9 @@
 package org.example.hotel.service;
 
 
+import jakarta.transaction.Transactional;
 import org.example.hotel.orm.Quarto;
+import org.example.hotel.orm.TipoQuarto;
 import org.example.hotel.repository.QuartoRepository;
 import org.example.hotel.repository.TipoQuartoRepository;
 import org.springframework.stereotype.Service;
@@ -10,13 +12,16 @@ import java.util.Optional;
 import java.util.Scanner;
 
 @Service
+@Transactional
 public class CrudQuartoService {
 
     private QuartoRepository quartoRepository;
+    private TipoQuartoRepository tipoQuartoRepository;
 
 
-    public CrudQuartoService(QuartoRepository quartoRepository) {
+    public CrudQuartoService(QuartoRepository quartoRepository, TipoQuartoRepository tipoQuartoRepository) {
         this.quartoRepository = quartoRepository;
+        this.tipoQuartoRepository = tipoQuartoRepository;
 
     }
 
@@ -63,9 +68,21 @@ public class CrudQuartoService {
         String nome = sc.next();
 
         Quarto quarto = new Quarto();
-        quarto.setNumero(numero);
-        quarto.setNome(nome);
-        quartoRepository.save(quarto);
+
+
+        System.out.println("Digite o id do tipo de quarto para vincular:");
+        Long id = sc.nextLong();
+        Optional<TipoQuarto> optionalTipoQuarto = tipoQuartoRepository.findById(id);
+        if (optionalTipoQuarto.isPresent()) {
+            TipoQuarto tipoQuarto = optionalTipoQuarto.get();
+            quarto.setNumero(numero);
+            quarto.setNome(nome);
+            quarto.setTipoQuarto(tipoQuarto);
+            quartoRepository.save(quarto);
+            System.out.println("Quarto Cadastrado com sucesso!");
+        } else {
+            System.out.println("Tipo de quarto não encontrado");
+        }
 
 
     }
@@ -105,13 +122,14 @@ public class CrudQuartoService {
         if (optionalQuarto.isPresent()) {
             sc = new Scanner(System.in);
             Quarto quarto = optionalQuarto.get();
-            System.out.println("Digite o nome do Quarto:");
+            System.out.println("Digite o novo nome do Quarto:");
             String nome = sc.nextLine();
             quarto.setNome(nome);
-            System.out.println("Digite o numero do Quarto:");
+            System.out.println("Digite o novo numero do Quarto:");
             Integer numero = sc.nextInt();
             quarto.setNumero(numero);
             quartoRepository.save(quarto);
+            System.out.println("Quarto atualizado com sucesso");
 
         } else {
             System.out.println("Nenhum funcionario encontrado");

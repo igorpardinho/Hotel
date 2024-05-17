@@ -88,9 +88,13 @@ public class CrudHospedeService {
         String telefone = sc.nextLine();
 
 
-        Hospede hospede = new Hospede(telefone, nome, cpf);
+        Hospede hospede = new Hospede();
+        hospede.setNome(nome);
+        hospede.setCpf(cpf);
+        hospede.setTelefone(telefone);
 
         hospedeRepository.save(hospede);
+        System.out.println("Hospede cadastrado com sucesso!");
     }
 
 
@@ -112,8 +116,7 @@ public class CrudHospedeService {
         if (optionalHospede.isPresent()) {
             Hospede hospede = optionalHospede.get();
             hospedeRepository.delete(hospede);
-            System.out.println("Hospede" +
-                    " deletado com sucesso");
+            System.out.println("Hospede deletado com sucesso");
         } else {
             System.out.println("Nenhum hospede encontrado");
         }
@@ -129,17 +132,18 @@ public class CrudHospedeService {
         if (optionalHospede.isPresent()) {
             sc = new Scanner(System.in);
             Hospede hospede = optionalHospede.get();
-            System.out.println("Digite o nome do hospede:");
+            System.out.println("Digite o novo nome do hospede:");
             String nome = sc.nextLine();
             hospede.setNome(nome);
-            System.out.println("Digite o cpf do hospede:");
+            System.out.println("Digite o novo cpf do hospede:");
             String cpf = sc.nextLine();
             hospede.setCpf(cpf);
-            System.out.println("Digite o telefone do hospede:");
+            System.out.println("Digite o novo telefone do hospede:");
             String telefone = sc.nextLine();
             hospede.setTelefone(telefone);
 
             hospedeRepository.save(hospede);
+            System.out.println("Hospede atualizado com sucesso");
 
         } else {
             System.out.println("Nenhum hospede encontrado");

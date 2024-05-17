@@ -6,9 +6,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Entity
 @Table(name = "tipos_de_quartos")
-@ToString
 @EqualsAndHashCode
 public class TipoQuarto {
 
@@ -16,9 +17,8 @@ public class TipoQuarto {
     public TipoQuarto() {
 
     }
-
-    public TipoQuarto(Quarto quarto){
-        this.quarto = quarto;
+    public TipoQuarto(String nome) {
+        this.nome = nome;
     }
 
     @Id
@@ -29,7 +29,16 @@ public class TipoQuarto {
     @Setter
     private String nome;
 
-    @OneToOne
-    private Quarto quarto;
+    @OneToMany(cascade = CascadeType.ALL)
+    @Getter
+    @Setter
+    private List<Quarto> quartos;
 
+    @Override
+    public String toString() {
+        return "TipoQuarto{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                '}';
+    }
 }

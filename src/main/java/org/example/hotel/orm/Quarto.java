@@ -34,4 +34,9 @@ public class Quarto {
     @Column(unique = true, nullable = false)
     private String nome;
 
+    @ManyToOne()
+    @JoinColumn(name = "tipo_quarto_id")
+    @Getter
+    @Setter
+    private TipoQuarto tipoQuarto;
 }

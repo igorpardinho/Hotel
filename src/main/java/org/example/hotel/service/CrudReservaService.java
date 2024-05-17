@@ -113,11 +113,12 @@ public class CrudReservaService {
         if (optionalReserva.isPresent()) {
             sc = new Scanner(System.in);
             Reserva reserva = optionalReserva.get();
-            System.out.println("Digite o numero da reserva");
+            System.out.println("Digite o novo numero da reserva");
             int numero = sc.nextInt();
             reserva.setNumero(numero);
 
             reservaRepository.save(reserva);
+            System.out.println("Reserva atualizada com sucesso");
 
         } else {
             System.out.println("Nenhuma reserva encontrada");
