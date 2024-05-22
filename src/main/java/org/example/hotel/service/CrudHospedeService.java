@@ -99,7 +99,10 @@ public class CrudHospedeService {
         System.out.println("Digite o telefone do hospede: ");
         String telefone = sc.nextLine();
 
-        fazerReserva();
+        if (!reservaRepository.findAll().iterator().hasNext()) {
+            fazerReserva();
+
+        }
         System.out.println("Digite o id da reserva do hospede:");
         Long idReserva = sc.nextLong();
 
@@ -108,19 +111,18 @@ public class CrudHospedeService {
             System.out.println("verifique o id da reserva");
         }
         Set<Quarto> quartos = new HashSet<>();
-        Hospede hospede = new Hospede(nome, cpf, telefone,quartos, reserva.get());
-        hospedeRepository.save(hospede);
-        System.out.println("Hospede cadastrado com sucesso!");
-
         System.out.println("Digite o id do quarto que deseja reservar");
         Long id = sc.nextLong();
         Optional<Quarto> quarto = quartoRepository.findById(id);
 
         if (quarto.isPresent()) {
+            Hospede hospede = new Hospede(nome, cpf, telefone, quartos, reserva.get());
+            hospedeRepository.save(hospede);
+            System.out.println("Hospede cadastrado com sucesso!");
             quartos.add(quarto.get());
             hospede.setQuartos(quartos);
             System.out.println("Quarto reservado com sucesso");
-        }else {
+        } else {
             System.out.println("Id do quarto não encontrado");
         }
 
@@ -160,7 +162,7 @@ public class CrudHospedeService {
         int numero = sc.nextInt();
         reserva.setNumero(numero);
         reservaRepository.save(reserva);
-        System.out.println("Reserva criada com sucesso - ID = "+ reserva.getId());
+        System.out.println("Reserva criada com sucesso - ID = " + reserva.getId());
     }
 
     public void atualizarHospede() {
@@ -181,8 +183,19 @@ public class CrudHospedeService {
             String telefone = sc.nextLine();
             hospede.setTelefone(telefone);
 
-            hospedeRepository.save(hospede);
-            System.out.println("Hospede atualizado com sucesso");
+            System.out.println("Digite o id do novo quarto para vincular: ");
+            Long idQuarto = sc.nextLong();
+            Optional<Quarto> optionalQuarto = quartoRepository.findById(idQuarto);
+            Set<Quarto> quartos = new HashSet<>();
+            if (optionalQuarto.isPresent()) {
+                Quarto quarto = optionalQuarto.get();
+                quartos.add(quarto);
+                hospede.setQuartos(quartos);
+                hospedeRepository.save(hospede);
+                System.out.println("Hospede atualizado com sucesso");
+            } else {
+                System.out.println("Nenhum quarto encontrado");
+            }
 
         } else {
             System.out.println("Nenhum hospede encontrado");

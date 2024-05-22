@@ -68,6 +68,7 @@ public class Hospede {
                 ", cpf='" + cpf + '\'' +
                 ", telefone='" + telefone + '\'' +
                 ", quartos=" + quartos +
+                 reserva +
                 '}';
     }
 }

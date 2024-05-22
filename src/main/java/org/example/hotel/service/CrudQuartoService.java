@@ -16,15 +16,15 @@ import java.util.Scanner;
 @Transactional
 public class CrudQuartoService {
 
-    private final HospedeRepository hospedeRepository;
+
     private QuartoRepository quartoRepository;
     private TipoQuartoRepository tipoQuartoRepository;
 
 
-    public CrudQuartoService(QuartoRepository quartoRepository, TipoQuartoRepository tipoQuartoRepository, HospedeRepository hospedeRepository) {
+    public CrudQuartoService(QuartoRepository quartoRepository, TipoQuartoRepository tipoQuartoRepository) {
         this.quartoRepository = quartoRepository;
         this.tipoQuartoRepository = tipoQuartoRepository;
-        this.hospedeRepository = hospedeRepository;
+
     }
 
     public void menu() {
@@ -68,7 +68,10 @@ public class CrudQuartoService {
         int numero = sc.nextInt();
         System.out.println("Digite o nome do quarto: ");
         String nome = sc.next();
-        cadastrarTipoQuarto();
+        if (!tipoQuartoRepository.findAll().iterator().hasNext()){
+            cadastrarTipoQuarto();
+        }
+
         System.out.println("Digite o id do tipo de quarto para vincular: ");
         Long id = sc.nextLong();
         Optional<TipoQuarto> optionalTipoQuartoRepository = tipoQuartoRepository.findById(id);
@@ -86,14 +89,15 @@ public class CrudQuartoService {
 
     }
 
-    public void cadastrarTipoQuarto(){
+    public void cadastrarTipoQuarto() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Digite o nome do tipo de quarto: ");
         String nome = sc.next();
         TipoQuarto tipoQuarto = new TipoQuarto(nome);
         tipoQuartoRepository.save(tipoQuarto);
-        System.out.println("Tipo de quarto cadastrado com sucesso! ID = "+ tipoQuarto.getId());
+        System.out.println("Tipo de quarto cadastrado com sucesso! ID = " + tipoQuarto.getId());
     }
+
     public void listarQuarto() {
         Iterable<Quarto> quartos = quartoRepository.findAll();
         if (quartos.iterator().hasNext()) {
@@ -136,6 +140,11 @@ public class CrudQuartoService {
             System.out.println("Digite o novo numero do Quarto:");
             int numero = sc.nextInt();
             quarto.setNumero(numero);
+
+            System.out.println("Digite o id do tipo de quarto para fazer o novo vinculo: ");
+            Long idTipoQuarto = sc.nextLong();
+            TipoQuarto tipoQuarto = tipoQuartoRepository.findById(idTipoQuarto).get();
+            quarto.setTipoQuarto(tipoQuarto);
             quartoRepository.save(quarto);
             System.out.println("Quarto atualizado com sucesso");
 

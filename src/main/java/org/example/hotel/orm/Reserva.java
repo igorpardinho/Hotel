@@ -4,11 +4,10 @@ import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
+
 
 @Entity
 @Table(name = "reservas")
-@ToString
 @EqualsAndHashCode
 public class Reserva {
 
@@ -37,4 +36,12 @@ public class Reserva {
     @Getter
     @Setter
     private int numero;
+
+    @Override
+    public String toString() {
+        return "Reserva{" +
+                "id=" + id +
+                ", numero=" + numero +
+                '}';
+    }
 }
