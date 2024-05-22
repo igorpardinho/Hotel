@@ -8,7 +8,6 @@ import lombok.ToString;
 
 @Entity
 @Table(name = "quartos")
-@ToString
 @EqualsAndHashCode
 public class Quarto {
 
@@ -16,10 +15,15 @@ public class Quarto {
     public Quarto() {
 
     }
+    @ManyToOne
+    @JoinColumn(name = "hospede_id")
+    private Hospede hospede;
 
     public Quarto(int numero,String nome,TipoQuarto quarto) {
         this.nome = nome;
         this.numero = numero;
+        this.tipoQuarto = quarto;
+
     }
 
 
@@ -42,9 +46,17 @@ public class Quarto {
     @Getter
     @Setter
     @ManyToOne
+    @JoinColumn(name = "tipoQuarto_id")
     private TipoQuarto tipoQuarto;
 
 
-
-
+    @Override
+    public String toString() {
+        return "Quarto{" +
+                ", id=" + id +
+                ", numero=" + numero +
+                ", nome='" + nome + '\'' +
+                 tipoQuarto +
+                '}';
+    }
 }

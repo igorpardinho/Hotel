@@ -2,24 +2,31 @@ package org.example.hotel.service;
 
 import jakarta.transaction.Transactional;
 import org.example.hotel.orm.Hospede;
+import org.example.hotel.orm.Quarto;
+import org.example.hotel.orm.Reserva;
 import org.example.hotel.repository.HospedeRepository;
+import org.example.hotel.repository.QuartoRepository;
 import org.example.hotel.repository.ReservaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.Set;
 
 @Service
 @Transactional
 public class CrudHospedeService {
 
 
+    private final QuartoRepository quartoRepository;
     private HospedeRepository hospedeRepository;
     private ReservaRepository reservaRepository;
 
-    public CrudHospedeService(HospedeRepository hospedeRepository, ReservaRepository reservaRepository) {
+    public CrudHospedeService(HospedeRepository hospedeRepository, ReservaRepository reservaRepository, QuartoRepository quartoRepository) {
         this.hospedeRepository = hospedeRepository;
         this.reservaRepository = reservaRepository;
+        this.quartoRepository = quartoRepository;
     }
 
     public void menu() {
@@ -92,11 +99,31 @@ public class CrudHospedeService {
         System.out.println("Digite o telefone do hospede: ");
         String telefone = sc.nextLine();
 
-        Hospede hospede = new Hospede(nome, cpf, telefone);
+        fazerReserva();
+        System.out.println("Digite o id da reserva do hospede:");
+        Long idReserva = sc.nextLong();
+
+        Optional<Reserva> reserva = reservaRepository.findById(idReserva);
+        if (reserva.isEmpty()) {
+            System.out.println("verifique o id da reserva");
+        }
+        Set<Quarto> quartos = new HashSet<>();
+        Hospede hospede = new Hospede(nome, cpf, telefone,quartos, reserva.get());
         hospedeRepository.save(hospede);
-
-
         System.out.println("Hospede cadastrado com sucesso!");
+
+        System.out.println("Digite o id do quarto que deseja reservar");
+        Long id = sc.nextLong();
+        Optional<Quarto> quarto = quartoRepository.findById(id);
+
+        if (quarto.isPresent()) {
+            quartos.add(quarto.get());
+            hospede.setQuartos(quartos);
+            System.out.println("Quarto reservado com sucesso");
+        }else {
+            System.out.println("Id do quarto não encontrado");
+        }
+
     }
 
 
@@ -124,6 +151,16 @@ public class CrudHospedeService {
         }
 
 
+    }
+
+    public void fazerReserva() {
+        Reserva reserva = new Reserva();
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Digite o número da reserva: ");
+        int numero = sc.nextInt();
+        reserva.setNumero(numero);
+        reservaRepository.save(reserva);
+        System.out.println("Reserva criada com sucesso - ID = "+ reserva.getId());
     }
 
     public void atualizarHospede() {

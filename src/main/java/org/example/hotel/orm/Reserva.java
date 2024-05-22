@@ -20,9 +20,16 @@ public class Reserva {
         this.numero = numero;
     }
 
+    @OneToOne
+    @JoinColumn(name = "hospede_id")
+    @Getter
+    @Setter
+    private Hospede hospede;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private Long id;
 
 

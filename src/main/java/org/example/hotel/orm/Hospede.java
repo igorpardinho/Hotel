@@ -6,8 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-
-
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -20,10 +20,23 @@ public class Hospede {
 
     }
 
-    public Hospede(String nome, String cpf, String telefone) {
+    @OneToMany()
+    @Getter
+    @Setter
+    private Set<Quarto> quartos = new HashSet<>();
+
+    @OneToOne
+    @JoinColumn(name = "reserva_id")
+    @Getter
+    @Setter
+    private Reserva reserva;
+
+    public Hospede(String nome, String cpf, String telefone, Set quartos, Reserva reserva) {
         this.telefone = telefone;
         this.cpf = cpf;
         this.nome = nome;
+        this.quartos = quartos;
+        this.reserva = reserva;
 
     }
 
@@ -54,6 +67,7 @@ public class Hospede {
                 ", nome='" + nome + '\'' +
                 ", cpf='" + cpf + '\'' +
                 ", telefone='" + telefone + '\'' +
+                ", quartos=" + quartos +
                 '}';
     }
 }

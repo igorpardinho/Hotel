@@ -5,7 +5,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -24,15 +26,16 @@ public class TipoQuarto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private Long id;
 
     @Getter
     @Setter
     private String nome;
 
-    @OneToMany
-    @JoinColumn(name = "tipoQuarto_id",referencedColumnName = "id")
-    private List<Quarto> quartos;
+    @OneToMany()
+    @JoinColumn(name = "Quarto_id")
+    private Set<Quarto> quartos = new HashSet<>();
 
 
     @Override
@@ -42,4 +45,6 @@ public class TipoQuarto {
                 ", nome='" + nome + '\'' +
                 '}';
     }
+
+
 }

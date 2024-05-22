@@ -2,8 +2,10 @@ package org.example.hotel.service;
 
 
 import jakarta.transaction.Transactional;
+import org.example.hotel.orm.Hospede;
 import org.example.hotel.orm.Quarto;
 import org.example.hotel.orm.TipoQuarto;
+import org.example.hotel.repository.HospedeRepository;
 import org.example.hotel.repository.QuartoRepository;
 import org.example.hotel.repository.TipoQuartoRepository;
 import org.springframework.stereotype.Service;
@@ -15,14 +17,15 @@ import java.util.Scanner;
 @Transactional
 public class CrudQuartoService {
 
+    private final HospedeRepository hospedeRepository;
     private QuartoRepository quartoRepository;
     private TipoQuartoRepository tipoQuartoRepository;
 
 
-    public CrudQuartoService(QuartoRepository quartoRepository, TipoQuartoRepository tipoQuartoRepository) {
+    public CrudQuartoService(QuartoRepository quartoRepository, TipoQuartoRepository tipoQuartoRepository, HospedeRepository hospedeRepository) {
         this.quartoRepository = quartoRepository;
         this.tipoQuartoRepository = tipoQuartoRepository;
-
+        this.hospedeRepository = hospedeRepository;
     }
 
     public void menu() {
@@ -66,9 +69,11 @@ public class CrudQuartoService {
         int numero = sc.nextInt();
         System.out.println("Digite o nome do quarto: ");
         String nome = sc.next();
+        cadastrarTipoQuarto();
         System.out.println("Digite o id do tipo de quarto para vincular: ");
         Long id = sc.nextLong();
         Optional<TipoQuarto> optionalTipoQuartoRepository = tipoQuartoRepository.findById(id);
+
         if (optionalTipoQuartoRepository.isPresent()) {
             TipoQuarto tipoQuarto = optionalTipoQuartoRepository.get();
             Quarto quarto = new Quarto(numero, nome, tipoQuarto);
@@ -82,7 +87,15 @@ public class CrudQuartoService {
 
     }
 
-
+    public void cadastrarTipoQuarto(){
+        TipoQuarto tipoQuarto = new TipoQuarto();
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Digite o nome do tipo de quarto: ");
+        String nome = sc.next();
+        tipoQuarto.setNome(nome);
+        tipoQuartoRepository.save(tipoQuarto);
+        System.out.println("Tipo de quarto cadastrado com sucesso! ID = "+ tipoQuarto.getId());
+    }
     public void listarQuarto() {
         Iterable<Quarto> quartos = quartoRepository.findAll();
         if (quartos.iterator().hasNext()) {
