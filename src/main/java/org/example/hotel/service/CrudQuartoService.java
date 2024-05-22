@@ -2,7 +2,6 @@ package org.example.hotel.service;
 
 
 import jakarta.transaction.Transactional;
-import org.example.hotel.orm.Hospede;
 import org.example.hotel.orm.Quarto;
 import org.example.hotel.orm.TipoQuarto;
 import org.example.hotel.repository.HospedeRepository;
