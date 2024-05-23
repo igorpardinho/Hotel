@@ -7,15 +7,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.Scanner;
 
+//A aplicação sempre vai rodar na classe com Application com o @SpringBootApplication
 @SpringBootApplication
 public class HotelApplication implements CommandLineRunner {
-
+// instanciando as classes de serviço que tem as nossas logicas de negocio
     private final CrudFuncionarioService FUNCIONARIO_SERVICE;
     private final CrudHospedeService HOSPEDE_SERVICE;
     private final CrudQuartoService QUARTO_SERVICE;
     private final CrudReservaService RESERVA_SERVICE;
     private final CrudTipoQuartoService TIPO_QUARTO_SERVICE;
 
+    // aplicando injeção de dependencia pra não precisarmos dar um 'new' nas nossas classes de serviço
     public HotelApplication(CrudFuncionarioService FUNCIONARIO_SERVICE, CrudHospedeService HOSPEDE_SERVICE,
                             CrudQuartoService QUARTO_SERVICE, CrudReservaService RESERVA_SERVICE, CrudTipoQuartoService TIPO_QUARTO_SERVICE) {
         this.FUNCIONARIO_SERVICE = FUNCIONARIO_SERVICE;
@@ -25,11 +27,13 @@ public class HotelApplication implements CommandLineRunner {
         this.TIPO_QUARTO_SERVICE = TIPO_QUARTO_SERVICE;
     }
 
+    //metodo main que vai iniciar a aplicação
     public static void main(String[] args) {
 
         SpringApplication.run(HotelApplication.class, args);
     }
 
+    //metodo para rodar nossa aplicação no terminal
     @Override
     public void run(String... args) {
         boolean isTrue = true;
@@ -44,6 +48,7 @@ public class HotelApplication implements CommandLineRunner {
             System.out.println("5 - para interagir com o Tipo de Quarto");
             System.out.println("0 - para Sair");
             int opcao = sc.nextInt();
+            //Chamando os metodos das classes services
             switch (opcao) {
                 case 1:
                     FUNCIONARIO_SERVICE.menu();

@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-
+//Criando a tabela no banco de dados
 @Entity
 @Table(name = "quartos")
 @EqualsAndHashCode
@@ -15,6 +15,7 @@ public class Quarto {
     public Quarto() {
 
     }
+    //Relação Muitos pra 1 entre as tabelas(Muitos quartos para 1 hospede)
     @ManyToOne
     @JoinColumn(name = "hospede_id")
     private Hospede hospede;
@@ -43,6 +44,7 @@ public class Quarto {
     @Column(unique = true, nullable = false)
     private String nome;
 
+    //Relação Muitos pra 1 entre as tabelas( Muitos quartos para 1 tipoQuarto)
     @Getter
     @Setter
     @ManyToOne

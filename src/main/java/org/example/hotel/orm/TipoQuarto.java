@@ -8,7 +8,7 @@ import lombok.Setter;
 import java.util.HashSet;
 import java.util.Set;
 
-
+//Criando a tabela no banco de dados
 @Entity
 @Table(name = "tipos_de_quartos")
 @EqualsAndHashCode
@@ -32,6 +32,7 @@ public class TipoQuarto {
     @Setter
     private String nome;
 
+    // Relaçao 1 pra muitos entre as tabelas (1 TipoQuarto para muitos Quartos)
     @OneToMany()
     @JoinColumn(name = "Quarto_id")
     private Set<Quarto> quartos = new HashSet<>();

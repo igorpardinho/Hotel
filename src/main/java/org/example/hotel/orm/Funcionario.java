@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+//Criando a tabela no banco de dados
 @Entity
 @Table(name = "funcionarios")
 @ToString

@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
+//Criando a tabela no banco de dados
 @Entity
 @Table(name = "hospedes")
 @EqualsAndHashCode
@@ -20,11 +21,13 @@ public class Hospede {
 
     }
 
+    // Relação 1 para muitos entre as tabelas (1 Hospede para muitos quartos)
     @OneToMany()
     @Getter
     @Setter
     private Set<Quarto> quartos = new HashSet<>();
 
+    // Relação 1 para 1 entre as tabelas( 1 hospede para 1 reserva)
     @OneToOne
     @JoinColumn(name = "reserva_id")
     @Getter

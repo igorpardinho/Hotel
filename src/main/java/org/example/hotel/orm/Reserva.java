@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-
+//Criando a tabela no banco de dados
 @Entity
 @Table(name = "reservas")
 @EqualsAndHashCode
@@ -19,6 +19,7 @@ public class Reserva {
         this.numero = numero;
     }
 
+    // Relação 1 pra 1 das tabelas (1 Reserva para 1 Hospede)
     @OneToOne
     @JoinColumn(name = "hospede_id")
     @Getter

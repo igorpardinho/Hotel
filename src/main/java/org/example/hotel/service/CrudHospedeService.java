@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.Scanner;
 import java.util.Set;
 
+//na classe Service podemos fazer a logica de negocio usando o repository que extendemos da interface para aplicar os metodos e aplicar no banco de dados
 @Service
 @Transactional
 public class CrudHospedeService {
