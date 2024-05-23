@@ -2,9 +2,7 @@ package org.example.hotel.service;
 
 
 import jakarta.transaction.Transactional;
-import org.example.hotel.orm.Quarto;
 import org.example.hotel.orm.TipoQuarto;
-import org.example.hotel.repository.QuartoRepository;
 import org.example.hotel.repository.TipoQuartoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
